@@ -37,9 +37,9 @@ def decrypt_image(input_path, output_path, key):
     print("Image decrypted successfully!")
 
  # image path
-input_image = r"C:\Users\sadha\Downloads\input.jpg"
-encrypted_image = r"C:\Users\sadha\Downloads\encrypted_image.jpg"
-decrypted_image = r"C:\Users\sadha\Downloads\decrypted_image.jpg"
+input_image = r"C:\Users\sadha\Downloads\input.png"
+encrypted_image = r"C:\Users\sadha\Downloads\encrypted_image.png"
+decrypted_image = r"C:\Users\sadha\Downloads\decrypted_image.png"
 
 
 # Encrypt the image
