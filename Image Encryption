@@ -1,0 +1,47 @@
+from PIL import Image
+import numpy as np
+
+# Key for encryption and decryption (must be the same for both)
+ENCRYPTION_KEY = 50
+
+def encrypt_image(image_path, output_path):
+    img = Image.open(image_path).convert('RGB')
+    data = np.array(img)
+
+    # Add encryption key (mod 256) to each pixel value
+    encrypted_data = (data + ENCRYPTION_KEY) % 256
+
+    # Swap rows (simple obfuscation)
+    encrypted_data = encrypted_data[::-1]
+
+    encrypted_img = Image.fromarray(encrypted_data.astype('uint8'))
+    encrypted_img.save(output_path)
+    print(f"Image encrypted and saved to {output_path}")
+
+def decrypt_image(image_path, output_path):
+    img = Image.open(image_path).convert('RGB')
+    data = np.array(img)
+
+    # Reverse row swapping
+    decrypted_data = data[::-1]
+
+    # Subtract encryption key (mod 256) to revert to original
+    decrypted_data = (decrypted_data - ENCRYPTION_KEY) % 256
+
+    decrypted_img = Image.fromarray(decrypted_data.astype('uint8'))
+    decrypted_img.save(output_path)
+    print(f"Image decrypted and saved to {output_path}")
+
+# Example usage
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", choices=["encrypt", "decrypt"], help="Mode: encrypt or decrypt")
+    parser.add_argument("input", help="Path to input image")
+    parser.add_argument("output", help="Path to save output image")
+    args = parser.parse_args()
+
+    if args.mode == "encrypt":
+        encrypt_image(args.input, args.output)
+    else:
+        decrypt_image(args.input, args.output)
